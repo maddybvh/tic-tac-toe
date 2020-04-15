@@ -50,7 +50,6 @@ const GameContoller =(() => {
         for (let i = 0; i < winningCombinations.length; i++){
           if (checker(winningCombinations[i], combo) == true){  
             alert(currentPlayer.symbol + ' won!')
-            squares.innerHTML = ''
             break
           }
         }
