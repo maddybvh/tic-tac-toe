@@ -43,7 +43,7 @@ const DisplayContoller =(() =>{
       //Push the square id to the current players' squares
       currentPlayer.addSquare(square.id)
       checkWinner()       
-      changePlayer()    
+      currentPlayer = changePlayer()    
     }
     });
   });
@@ -63,7 +63,7 @@ const DisplayContoller =(() =>{
   let checker = (arr, target) => target.every(v => arr.includes(v));
 
   function changePlayer () {
-    currentPlayer == player1 ? currentPlayer = player2 : currentPlayer = player2
+    return (currentPlayer == player1 ? player2 : player1)
   }
 
 })();
