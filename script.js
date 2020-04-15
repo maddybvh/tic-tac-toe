@@ -15,7 +15,7 @@ const player1 = playerFactory('X')
 const player2 = playerFactory('O')
 var currentPlayer = player1
 
-const winingCombinations = [
+const winningCombinations = [
   [1,2,3],
   [4,5,6],
   [7,8,9],
@@ -26,14 +26,7 @@ const winingCombinations = [
   [3,5,7]
 ]
 
-const GameBoard = (() => {
-
-
-
-
-})();
-
-const DisplayContoller =(() =>{
+const GameContoller =(() => {
   const squares = document.querySelectorAll('.square');
   squares.forEach((square) => {square.addEventListener('click', (e) => {
     //If the square is empty    
@@ -41,26 +34,32 @@ const DisplayContoller =(() =>{
       //Add the current players mark to the square
       e.target.textContent = currentPlayer.symbol
       //Push the square id to the current players' squares
-      currentPlayer.addSquare(square.id)
-      checkWinner()       
+      currentPlayer.addSquare(parseInt(square.id))
+      checkWinner(currentPlayer.squares)       
       currentPlayer = changePlayer()    
     }
     });
   });
 
   //--- check if current player has the winning numbers
-  function checkWinner (){
-    if (currentPlayer.squares.length > 4){
+  function checkWinner (combo){
+    if (combo.length > 4){
         alert("It's a tie")
-    }else if (currentPlayer.squares.length > 2) {
-        for (let i = 0; i < winingCombinations.length; i++){
-            if (checker(currentPlayer.squares, winingCombinations[i]) === true){
-                alert(currentPlayer.symbol + "has won!")
-                break
-            }}}
+    } 
+    else if (combo.length > 2) {     
+        for (let i = 0; i < winningCombinations.length; i++){
+          if (checker(winningCombinations[i], combo) == true){  
+            alert(currentPlayer.symbol + ' won!')
+            squares.innerHTML = ''
+            break
+          }
+        }
+      }
   }
 
-  let checker = (arr, target) => target.every(v => arr.includes(v));
+  const checker = (array, target) => {
+    return array.every(element => target.indexOf(element) > -1);
+  }
 
   function changePlayer () {
     return (currentPlayer == player1 ? player2 : player1)
